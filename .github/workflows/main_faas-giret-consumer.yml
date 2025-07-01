@@ -10,8 +10,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
+      id-token: write # Required for OIDC login to Azure
+      contents: read  # Required for actions/checkout
 
     steps:
       - name: Checkout GitHub Action
@@ -23,9 +23,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Restore Project Dependencies Using Mvn
-        run: |
-          mvn clean package
+      - name: Restore Project Dependencies Using Maven
+        run: mvn clean package
 
       - name: Login to Azure
         uses: azure/login@v2
