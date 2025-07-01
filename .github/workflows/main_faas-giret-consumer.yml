@@ -1,4 +1,4 @@
-name: Build and deploy Java project to Azure Function App - faas-giret-consumer
+name: Deploy wallet folder to Azure Function App - faas-giret-consumer
 
 on:
   push:
@@ -7,24 +7,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # Required for OIDC login to Azure
-      contents: read  # Required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
-      - name: Checkout GitHub Action
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Java Sdk 17
-        uses: actions/setup-java@v1
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Restore Project Dependencies Using Maven
-        run: mvn clean package
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -33,11 +24,8 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AAEF69DD9700442C9C5709AFE8EE0E3F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B0C89A8982914695A64236B3E515A839 }}
 
-      - name: Run Azure Functions Action
+      - name: Deploy wallet folder to Azure Functions
         uses: Azure/functions-action@v1
-        id: fa
         with:
           app-name: faas-giret-consumer
-          slot-name: Production
           package: '.'
-          respect-pom-xml: true
