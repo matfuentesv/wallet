@@ -2,21 +2,21 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read  #This is required for actions/checkout
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
 
     steps:
-      - name: 'Checkout GitHub Action'
+      - name: Checkout GitHub Action
         uses: actions/checkout@v4
 
-      - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
+      - name: Setup Java Sdk
         uses: actions/setup-java@v1
         with:
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: 'Restore Project Dependencies Using Mvn'
+      - name: Restore Project Dependencies Using Mvn
         shell: pwsh
-        run: | 
+        run: |
           pushd './${{ env.PACKAGE_DIRECTORY }}'
           mvn clean package
           popd
@@ -28,11 +28,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AAEF69DD9700442C9C5709AFE8EE0E3F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B0C89A8982914695A64236B3E515A839 }}
 
-      - name: 'Run Azure Functions Action'
+      - name: Run Azure Functions Action
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: 'faas-giret-consumer'
-          slot-name: 'Production'
-          package: '${{ env.PACKAGE_DIRECTORY }}'
+          app-name: faas-giret-consumer
+          slot-name: Production
+          package: ${{ env.PACKAGE_DIRECTORY }}
           respect-pom-xml: true
