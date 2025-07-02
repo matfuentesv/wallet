@@ -24,7 +24,7 @@ jobs:
         run: |
           zip -r deploy.zip host.json Wallet_DQEVECTR9GSE4KR1
 
-      - name: 🔑 Login to Azure
+      - name: 🔐 Login to Azure
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D2B17FDF77ED4386B646733CE308ED41 }}
