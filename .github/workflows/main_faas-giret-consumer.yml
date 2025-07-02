@@ -19,17 +19,17 @@ jobs:
 
       - name: 📂 List workspace files BEFORE zipping
         run: |
-          echo "Listing project files..."
+          echo "======= Workspace files ======="
           ls -R
 
       - name: 🗜️ Create ZIP package with wallet folder
         run: |
-          echo "Creating deploy.zip..."
+          echo "======= Creating deploy.zip ======="
           zip -r deploy.zip host.json Wallet_DQEVECTR9GSE4KR1
 
       - name: 📂 List ZIP content for verification
         run: |
-          echo "Listing contents of deploy.zip..."
+          echo "======= Contents of deploy.zip ======="
           unzip -l deploy.zip
 
       - name: 🔐 Login to Azure
