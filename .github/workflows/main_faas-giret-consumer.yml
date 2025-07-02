@@ -1,5 +1,4 @@
 name: Deploy wallet folder to Azure Function App - faas-giret-consumer
-
 on:
   push:
     branches:
