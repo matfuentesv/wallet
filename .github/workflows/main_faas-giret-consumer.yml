@@ -18,7 +18,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📂 List workspace files BEFORE zipping
-        run: ls -R
+        run: |
+          echo "Listing project files..."
+          ls -R
 
       - name: 🗜️ Create ZIP package with wallet folder
         run: |
@@ -26,7 +28,9 @@ jobs:
           zip -r deploy.zip host.json Wallet_DQEVECTR9GSE4KR1
 
       - name: 📂 List ZIP content for verification
-        run: unzip -l deploy.zip
+        run: |
+          echo "Listing contents of deploy.zip..."
+          unzip -l deploy.zip
 
       - name: 🔐 Login to Azure
         uses: azure/login@v2
